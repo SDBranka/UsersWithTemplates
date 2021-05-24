@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Users With Templates</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <!-- <link rel="stylesheet" href="../static/css/style.css" -->
+    </head>
+    <body>
+        <div id="wrapper">
+            <div id="top">
+                <h1>All The Users</h1>
+                <table>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Age</th>
+                    </tr>
+                    {% for user in all_the_users %}
+                        <tr>
+                            <td>{{user.id}}</td>
+                            <td>{{user.first_name}}  {{user.last_name}}</td>
+                            <td>{{user.email_address}}</td>
+                            <td>{{user.age}}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+        
+            </div> <!--end top-->
+            <div id="bottom">
+                <h2>Add a User</h2>
+                <form action="/process_form" method="POST">
+                    {% csrf_token %}
+                    <div id="name">
+                        <p id="name_input">First Name: <input id= "f_name" name="first_name" type="text" required></p>
+                        <p>Last Name: <input id= "l_name" name="last_name" type="text" required></p>
+                    </div>
+                    <div id="email_and_age">
+                        <p id="email_input">Email: <input id= "email" name="email_address" type="text" required></p>
+                        <p>Age: <input id= "age" name="age" type="text" required></p>
+                    </div>
+                    <button type="submit">Submit</button>  
+                </form>
+            </div>      <!--end bottom-->
+        </div>          <!--end wrapper-->
+    </body>
+</html>

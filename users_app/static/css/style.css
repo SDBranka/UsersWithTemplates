@@ -1,0 +1,52 @@
+* {
+    margin: 0;
+    padding: 0;
+    /* border: 1px solid red; */
+}
+
+#wrapper {
+    width: 900px;
+    margin: 50px auto;
+    background-color: coral;
+}
+
+#top {
+    text-align: center;
+}
+
+table {
+    width: 100%;
+    border: 1px solid rgb(15, 15, 138);
+    background-color: white;
+}
+
+th, tr, td {
+    border: 1px solid rgb(15, 15, 138);
+} 
+
+#bottom {
+    padding: 10px;
+}
+
+h2 {
+    text-align: center;
+}
+
+#name, #email_and_age {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+#name_input {
+    margin-right: 250px;
+}
+
+#email_input {
+    margin-right: 285px;
+}
+
+button {
+    padding: 5px;
+    border-radius: 5px;
+    margin-left: 820px;
+}

@@ -1,0 +1,134 @@
+sdbra@DESKTOP-8JVH1PB MINGW64 ~/Desktop/Coding_Dojo/Assignments/python_stack/django/django_orm
+$ django-admin startproject Users_Shell
+(py3Env)
+sdbra@DESKTOP-8JVH1PB MINGW64 ~/Desktop/Coding_Dojo/Assignments/python_stack/django/django_orm
+$ cd Users_Shell/
+(py3Env)
+sdbra@DESKTOP-8JVH1PB MINGW64 ~/Desktop/Coding_Dojo/Assignments/python_stack/django/django_orm/Users_Shell
+$ python manage.py startapp users_app
+(py3Env)
+sdbra@DESKTOP-8JVH1PB MINGW64 ~/Desktop/Coding_Dojo/Assignments/python_stack/django/django_orm/Users_Shell
+$ python manage.py makemigrations
+Migrations for 'users_app':
+  users_app\migrations\0001_initial.py
+    - Create model Movie
+(py3Env)
+sdbra@DESKTOP-8JVH1PB MINGW64 ~/Desktop/Coding_Dojo/Assignments/python_stack/django/django_orm/Users_Shell
+$ python manage.py migrate
+Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, sessions, users_app
+Running migrations:
+  Applying contenttypes.0001_initial... OK
+  Applying auth.0001_initial... OK
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying contenttypes.0002_remove_content_type_name... OK
+  Applying auth.0002_alter_permission_name_max_length... OK
+  Applying auth.0003_alter_user_email_max_length... OK
+  Applying auth.0004_alter_user_username_opts... OK
+  Applying auth.0005_alter_user_last_login_null... OK
+  Applying auth.0006_require_contenttypes_0002... OK
+  Applying auth.0007_alter_validators_add_error_messages... OK
+  Applying auth.0008_alter_user_username_max_length... OK
+  Applying auth.0009_alter_user_last_name_max_length... OK
+  Applying auth.0010_alter_group_name_max_length... OK
+  Applying auth.0011_update_proxy_permissions... OK
+  Applying sessions.0001_initial... OK
+  Applying users_app.0001_initial... OK
+(py3Env)
+sdbra@DESKTOP-8JVH1PB MINGW64 ~/Desktop/Coding_Dojo/Assignments/python_stack/django/django_orm/Users_Shell
+$ python manage.py shell
+Python 3.9.4 (tags/v3.9.4:1f2e308, Apr  6 2021, 13:40:21) [MSC v.1928 64 bit (AM
+D64)]
+Type 'copyright', 'credits' or 'license' for more information
+IPython 7.23.1 -- An enhanced Interactive Python. Type '?' for help.
+
+In [1]: from users_app.models import users
+
+
+#Query: Create 3 new users
+
+In [2]: bob = users.objects.create(first_name = "Bob", last_name = "Dobbs", email_address = "bobdobbs@email.com", age = 37)
+In [3]: jane = users.objects.create(first_name = "Jane", last_name = "Doe",email_address = "janedoe@email.com", age = 25)
+In [4]: john = users.objects.create(first_name = "John", last_name = "Jacob", email_address = "johnjacob@email.com, age = 52)
+
+
+#Query: Retrieve all the users
+
+In [5]: users.objects.all()
+Out[5]: <QuerySet [<users: users object (1)>, <users: users object (2)>, <users
+: users object (3)>]>
+
+
+#Query: Retrieve the last user
+
+In [6]: users.objects.last()
+Out[6]: <users: users object (3)>
+
+
+#Query: Retrieve the first user
+
+In [7]: users.objects.first().__dict__
+Out[7]:
+{'_state': <django.db.models.base.ModelState at 0x206049896d0>,
+ 'id': 1,
+ 'first_name': 'Bob',
+ 'last_name': 'Dobbs',
+ 'email_address': 'bobdobbs@email.com',
+ 'age': 37,
+ 'created_at': datetime.datetime(2021, 5, 21, 19, 18, 37, 402027, tzinfo=<UTC>),
+
+ 'updated_at': datetime.datetime(2021, 5, 21, 19, 18, 37, 402027, tzinfo=<UTC>)}
+
+
+#Query: Change the user with id=3 so their last name is Pancakes.
+
+In [8]: user_to_update = users.objects.get(id = 3)
+
+In [9]: user_to_update.last_name = "Pancakes"
+
+In [10]: user_to_update.save()
+
+In [11]: users.objects.get(id = 3).__dict__
+Out[11]:
+{'_state': <django.db.models.base.ModelState at 0x2060499b370>,
+ 'id': 3,
+ 'first_name': 'John',
+ 'last_name': 'Pancakes',
+ 'email_address': 'johnjacob@email.com',
+ 'age': 52,
+ 'created_at': datetime.datetime(2021, 5, 21, 19, 24, 51, 822394, tzinfo=<UTC>),
+
+ 'updated_at': datetime.datetime(2021, 5, 21, 19, 47, 19, 947608, tzinfo=<UTC>)}
+
+
+#Query: Delete the user with id=2 from the database
+
+In [12]: user_to_delete = users.objects.get(id = 2)
+
+In [13]: user_to_delete.delete()
+Out[13]: (1, {'users_app.users': 1})
+
+In [14]: users.objects.all()
+Out[14]: <QuerySet [<users: users object (1)>, <users: users object (3)>]>
+
+
+#Query: Get all the users, sorted by their first name
+In [15]: all_users = users.objects.all()
+
+In [16]: for u in all_users:
+    ...:     print(u.first_name)
+    ...:
+Bob
+John
+
+
+#BONUS Query: Get all the users, sorted by their first name in descending order
+
+In [17]: users.objects.order_by("-first_name")
+Out[17]: <QuerySet [<users: users object (3)>, <users: users object (1)>]>
+
+
+
+
